@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resource :registration, only: [:new, :create]
+  resource :session
+  resources :passwords, param: :token
   get "chats/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -6,6 +9,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   root "chats#index"
+  resources :chats, only: [:index, :create, :show], param: :uuid
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
