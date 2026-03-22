@@ -16,3 +16,4 @@ pin "scheduler" # @0.27.0
 pin "boring-avatars" # @2.0.4
 pin "react/jsx-runtime", to: "react--jsx-runtime.js" # @19.2.4
 pin_all_from "app/javascript/components", under: "components", to: "components"
+pin_all_from "app/javascript/stream_actions", under: "stream_actions"
