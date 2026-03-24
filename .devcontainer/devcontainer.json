@@ -3,23 +3,29 @@
   "dockerComposeFile": "compose.yaml",
   "service": "rails-app",
   "workspaceFolder": "/workspaces/chat_gpt_clone",
-
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/node:1": { "version": "20" },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
     "ghcr.io/rails/devcontainer/features/activestorage": {},
     "ghcr.io/rails/devcontainer/features/sqlite3": {}
   },
-
   "containerEnv": {
     "CAPYBARA_SERVER_PORT": "45678",
     "SELENIUM_HOST": "selenium",
   },
-
-  "forwardPorts": [3000],
-
+  "mounts": [
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/tmp/ssh-agent-vscode.sock"
+  },
+  "forwardPorts": [
+    3000
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -29,6 +35,7 @@
       ]
     }
   },
-
-  "postCreateCommand": "bin/setup --skip-server"
+  "postCreateCommand": "bin/setup --skip-server",
+  "postStartCommand": "bash .devcontainer/setup-ssh-agent.sh",
+  "postAttachCommand": "bash .devcontainer/setup-ssh-agent.sh"
 }

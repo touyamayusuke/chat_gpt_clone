@@ -2,5 +2,5 @@
 FROM mcr.microsoft.com/devcontainers/ruby:3.3-bookworm
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-  sqlite3 libsqlite3-dev \
+  sqlite3 libsqlite3-dev socat \
   && rm -rf /var/lib/apt/lists/*
