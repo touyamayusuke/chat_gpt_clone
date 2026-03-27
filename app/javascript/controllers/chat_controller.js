@@ -94,8 +94,14 @@ export default class extends Controller {
               "X-CSRF-Token": csrfToken,
               "Accept": "text/vnd.turbo-stream.html",
             },
-          }).then(response => response.text())
-            .then(html => Turbo.renderStreamMessage(html))
+          }).then(response => {
+            if (!response.ok) return null;
+            return response.text();
+          }).then(html => {
+            if (html) Turbo.renderStreamMessage(html);
+          }).catch(err => {
+            console.warn("Sidebar update skipped:", err);
+          });
         }
         break;
       }

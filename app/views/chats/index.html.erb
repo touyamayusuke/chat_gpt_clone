@@ -17,9 +17,6 @@
               <%= icon "edit" %>
             <% end %>
           </div>
-            <div class="pr-3 pb-3">
-              <%= link_to "用語管理", glossary_terms_path, class: "flex w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800" %>
-            </div>
             <div class="flex-col flex-1 transition-opacity duration-500 relative pr-3 overflow-y-auto">
               <div id="sidebar" class="group/sidebar">
                 <div class="flex flex-col gap-2 text-sm">
@@ -96,7 +93,7 @@
   </div>
 
   <template id="chat-message">
-    <div class="w-full mx-auto max-w-3xl px-4 group/message">
+    <div class="w-full mx-auto max-w-3xl px-4 group/message mb-2">
       <div class="flex gap-4 w-full group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:w-fit">
         <div class="flex flex-col gap-4 w-full">
           <div class="flex flex-row gap-2 items-start">

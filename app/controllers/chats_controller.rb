@@ -25,7 +25,12 @@ class ChatsController < ApplicationController
       content = stream_chat_response(client, sse, chat_model)
       chat = Chat.find_or_initialize_by(uuid: params[:uuid]) do |chat|
         chat.user = Current.session.user
-        chat.title = generate_title(client, chat_model)
+        chat.title = begin
+          generate_title(client, chat_model)
+        rescue => e
+          Rails.logger.error("Failed to generate title: #{e.message}")
+          params[:prompt].truncate(80)
+        end
       end
       if chat.user != Current.session.user
         raise "User mismatch"
@@ -35,6 +40,8 @@ class ChatsController < ApplicationController
       chat.save!
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error("Failed to save chat: #{e.message}")
+    rescue => e
+      Rails.logger.error("Unexpected error in chat create: #{e.message}")
     ensure
       sse.close
     end
