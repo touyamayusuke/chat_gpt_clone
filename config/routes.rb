@@ -14,6 +14,11 @@ Rails.application.routes.draw do
       get "delete_modal"
     end
   end
+  resources :glossary_terms, only: [:index, :create, :edit, :update, :destroy] do
+    member do
+      get "delete_modal"
+    end
+  end
 
   get "/auth/google_oauth2/callback", to: "sessions#google"
 

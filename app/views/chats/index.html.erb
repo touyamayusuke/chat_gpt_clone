@@ -17,6 +17,9 @@
               <%= icon "edit" %>
             <% end %>
           </div>
+            <div class="pr-3 pb-3">
+              <%= link_to "用語管理", glossary_terms_path, class: "flex w-full rounded-xl border border-zinc-300 px-3 py-2 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800" %>
+            </div>
             <div class="flex-col flex-1 transition-opacity duration-500 relative pr-3 overflow-y-auto">
               <div id="sidebar" class="group/sidebar">
                 <div class="flex flex-col gap-2 text-sm">
@@ -50,8 +53,9 @@
       <div class="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4">
         <% if (@chat&.messages || []).empty? %>
           <div data-chat-target="greeting" class="max-w-3xl mx-auto flex flex-1 items-center min-h-[60vh]">
-            <div class="text-2xl text-center text-muted-foreground">
-              こんにちは！質問してみましょう。
+            <div class="text-2xl text-center text-muted-foreground ">
+              直販営業部について質問してみましょう<br>(わからない用語など)
+              <img src="<%= asset_path('yakultman.png') %>" class="mx-auto mt-6 w-36" />
             </div>
           </div>
         <% end %>

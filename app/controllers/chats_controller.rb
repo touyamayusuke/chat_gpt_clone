@@ -62,10 +62,27 @@ class ChatsController < ApplicationController
 
   def stream_chat_response(client, sse, chat_model)
     full_content = ""
+    messages = []
+    glossary_context = glossary_context_for(params[:prompt])
+
+    if glossary_context.present?
+      messages << {
+        role: "system",
+        content: <<~SYSTEM_PROMPT
+          あなたは回答時に、次の用語説明のみを参照してください。
+          該当する説明がない情報は推測せず、一般的な回答として扱ってください。
+
+          #{glossary_context}
+        SYSTEM_PROMPT
+      }
+    end
+
+    messages << { role: "user", content: params[:prompt] }
+
     client.chat(
       parameters: {
         model: chat_model[:id],
-        messages: [ { role: "user", content: params[:prompt] } ],
+        messages: messages,
         stream: proc do |chunk|
           content = chunk.dig("choices", 0, "delta", "content")
           if content
@@ -76,6 +93,15 @@ class ChatsController < ApplicationController
       }
     )
     full_content
+  end
+
+  def glossary_context_for(prompt)
+    matched_terms = GlossaryTerm.matching_prompt(prompt)
+    return if matched_terms.empty?
+
+    matched_terms.map do |glossary_term|
+      "#{glossary_term.term}: #{glossary_term.description}"
+    end.join("\n")
   end
 
   def generate_title(client, chat_model)

@@ -1,6 +1,10 @@
 <div class="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
   <div class="w-full max-w-md overflow-hidden rounded-2xl gap-6 flex flex-col">
     <div class="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
+      <div class="flex items-center gap-4 mb-8">
+        <img src="<%= asset_path('hakase.png') %>" class="w-16" />
+        <h2 class="text-3xl font-bold dark:text-zinc-50">沖縄ヤクルト直販<br>サポートチャット</h2>
+      </div>
       <h3 class="text-xl font-semibold dark:text-zinc-50">サインイン</h3>
     </div>
     <%= form_with url: session_url, class: "flex flex-col gap-4 px-4 sm:px-16" do |form| %>
@@ -14,6 +18,5 @@
     <% end %>
     <p class="text-center text-sm text-zinc-600 dark:text-zinc-400">まだアカウントをお持ちでないですか？<%= link_to "アカウント登録", new_registration_path, class: "font-semibold text-zinc-800 hover:underline dark:text-zinc-200" %></p>
     <%= render partial: "shared/google_login" %>
-    <%= render partial: "shared/auth_footer" %>
   </div>
 </div>
