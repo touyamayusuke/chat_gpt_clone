@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
+  match "/auth/failure", to: "sessions#failure", via: [:get, :post]
   get "/auth/google_oauth2/callback", to: "sessions#google"
 
   get "/terms",   to: "static_pages#terms"
