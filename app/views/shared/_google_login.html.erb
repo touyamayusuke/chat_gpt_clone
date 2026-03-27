@@ -7,7 +7,7 @@
 </div>
 
 <div class="flex flex-col gap-4 px-4 sm:px-16">
-  <%= link_to "/auth/google_oauth2", class: "inline-flex items-center justify-center gap-2 border border-zinc-200 rounded-md text-sm cursor-pointer font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800 h-10 px-4 py-2" do %>
+  <%= button_to "/auth/google_oauth2", method: :post, form: { data: { turbo: false } }, class: "inline-flex w-full items-center justify-center gap-2 border border-zinc-200 rounded-md text-sm cursor-pointer font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800 h-10 px-4 py-2" do %>
     <%= icon "google" %>
     Google で続行
   <% end %>
