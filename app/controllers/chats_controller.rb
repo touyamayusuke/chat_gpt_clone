@@ -65,17 +65,21 @@ class ChatsController < ApplicationController
     messages = []
     glossary_context = glossary_context_for(params[:prompt])
 
-    if glossary_context.present?
-      messages << {
-        role: "system",
-        content: <<~SYSTEM_PROMPT
-          あなたは回答時に、次の用語説明のみを参照してください。
-          該当する説明がない情報は推測せず、一般的な回答として扱ってください。
-
-          #{glossary_context}
-        SYSTEM_PROMPT
-      }
+    if glossary_context.blank?
+      message = "該当する用語が見つかりませんでした。研修担当に確認してください。"
+      sse.write({ message: message })
+      return message
     end
+
+    messages << {
+      role: "system",
+      content: <<~SYSTEM_PROMPT
+        あなたは回答時に、次の用語説明のみを参照してください。
+        与えられた用語説明以外の情報は使わず、推測や補足はしないでください。
+
+        #{glossary_context}
+      SYSTEM_PROMPT
+    }
 
     messages << { role: "user", content: params[:prompt] }
 
@@ -92,6 +96,7 @@ class ChatsController < ApplicationController
         end
       }
     )
+
     full_content
   end
 

@@ -36,5 +36,6 @@
     }
   },
   "postCreateCommand": "bin/setup --skip-server",
-  "postStartCommand": "bash .devcontainer/setup-ssh-agent.sh"
+  "postStartCommand": "bash .devcontainer/setup-ssh-agent.sh",
+  "postAttachCommand": "bash .devcontainer/setup-ssh-agent.sh"
 }

@@ -8,7 +8,7 @@ image: touyamayusuke/chat_gpt_clone
 servers:
   web:
     hosts:
-      - 160.251.143.221
+      - 163.44.125.242
     cmd: bin/rails server
   # job:
   #   hosts:
@@ -21,7 +21,7 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: chatgpt.blog-standard.tech
+  host: chatgpt.supportchat.fun
   app_port: 3000
 
 # Credentials for your image host.
@@ -79,7 +79,7 @@ asset_path: /rails/public/assets
 # Configure the image builder.
 builder:
   arch: amd64
-  remote: ssh://root@160.251.143.221
+  remote: ssh://root@163.44.125.242
   secrets:
     - RAILS_MASTER_KEY
 
