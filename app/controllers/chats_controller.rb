@@ -63,11 +63,21 @@ class ChatsController < ApplicationController
   def stream_chat_response(client, sse, chat_model)
     full_content = ""
     messages = []
-    glossary_context = glossary_context_for(params[:prompt])
-
-    if glossary_context.blank?
-      message = "該当する用語が見つかりませんでした。研修担当に確認してください。"
-      sse.write({ message: message })
+    result = GlossaryTerm.matching_prompt(params[:prompt])
+    glossary_context = ""
+    
+    # 完全一致がある場合
+    if result[:exact].present?
+      glossary_context = result[:exact].map do |term|
+        "#{term.term}: #{term.description}"
+      end.join("\n")
+    # 候補がある場合
+    elsif result[:candidates].present?
+      if glossary_context.blank?
+        message = "該当する用語が見つかりませんでした。研修担当に確認してください。"
+        sse.write({ message: message })
+      end
+      sse.write({ message: "\n\nもしかして:#{result[:candidates].map(&:term).join(", ")} ?\n\n" })
       return message
     end
 
@@ -98,15 +108,6 @@ class ChatsController < ApplicationController
     )
 
     full_content
-  end
-
-  def glossary_context_for(prompt)
-    matched_terms = GlossaryTerm.matching_prompt(prompt)
-    return if matched_terms.empty?
-
-    matched_terms.map do |glossary_term|
-      "#{glossary_term.term}: #{glossary_term.description}"
-    end.join("\n")
   end
 
   def generate_title(client, chat_model)
