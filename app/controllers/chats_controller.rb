@@ -77,6 +77,7 @@ class ChatsController < ApplicationController
         message = "該当する用語が見つかりませんでした。研修担当に確認してください。"
         sse.write({ message: message })
       end
+      message = "該当する用語が見つかりませんでした。\n\nもしかして: #{result[:candidates].map(&:term).join(", ")} ?"
       sse.write({ message: "\n\nもしかして:#{result[:candidates].map(&:term).join(", ")} ?\n\n" })
       return message
     end
@@ -86,6 +87,7 @@ class ChatsController < ApplicationController
       content: <<~SYSTEM_PROMPT
         あなたは回答時に、次の用語説明のみを参照してください。
         与えられた用語説明以外の情報は使わず、推測や補足はしないでください。
+        参照した用語説明をもとに、ユーザーの質問に対してできるだけわかりやすくまとめてください。
 
         #{glossary_context}
       SYSTEM_PROMPT
