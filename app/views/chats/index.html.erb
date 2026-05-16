@@ -50,8 +50,8 @@
       <div class="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4 pb-24">
         <% if (@chat&.messages || []).empty? %>
           <div data-chat-target="greeting" class="max-w-3xl mx-auto flex flex-1 items-center min-h-[60vh]">
-            <div class="text-2xl text-center text-muted-foreground ">
-              直販営業部について質問してみましょう<br>(わからない用語など)
+            <div class="text-xl text-center text-muted-foreground ">
+              直販営業部のわからない用語を<br>聞いてみましょう！
               <img src="<%= asset_path('yakultman.png') %>" class="mx-auto mt-6 w-36" />
             </div>
           </div>
@@ -106,4 +106,3 @@
     </div>
   </template>
 </div>
-
